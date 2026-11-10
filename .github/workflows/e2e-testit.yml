@@ -17,16 +17,17 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        node-version: ['22', '24']
         browser: [chrome, firefox, edge]
 
     steps:
       - name: Hae lähdekoodi
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Asenna Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: ${{ matrix.node-version }}
           cache: npm
 
       - name: Asenna riippuvuudet
@@ -36,3 +37,4 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           install: false
+          browser: ${{ matrix.browser }}
